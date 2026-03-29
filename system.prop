@@ -1,0 +1,14 @@
+# Fingerprint
+ro.build.fingerprint=Mobvoi/ricefish/ricefish:11/RMKB.240228.004/239:user/release-keys
+ro.build.date=Mon Mar 18 16:24:18 CST 2024
+ro.build.date.utc=1710750258
+ro.build.version.sdk=30
+
+# ADB
+ro.adb.secure=0
+
+# USB MTP
+ro.sys.usb.storage.type=mtp
+
+# Timezone
+persist.sys.timezone=Asia/Shanghai
