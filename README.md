@@ -16,7 +16,9 @@ Storage | 8G EMMC
 Battery | Non-removable Li-Po 380 mAh battery
 Display | 360 x 360 pixels, 1.3 inches, 60 Hz, TFT LCD
 
-<img src="https://growth-cdn.ticwear.com/ticbuy/img/ticwatche3-style-watch-black.0.png" width="243" height="361">
+<p align="center">
+  <img src="https://growth-cdn.ticwear.com/ticbuy/img/ticwatche3-style-watch-black.0.png" width="243">
+</p>
 
 ## Features
 
