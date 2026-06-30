@@ -25,7 +25,7 @@ Display | 360 x 360 pixels, 1.3 inches, 60 Hz, TFT LCD
 Works:
 
 - [X] ADB
-- [] Decryption (WearOS 3.5 By Android 11)
+- [X] Decryption (FBE: fileencryption=v2+emmc_optimized, WearOS 3.5 By Android 11)
 - [X] Display
 - [X] Flashing
 - [X] MTP

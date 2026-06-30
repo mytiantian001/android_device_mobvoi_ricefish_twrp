@@ -1,11 +1,26 @@
-on init
-    write /sys/class/backlight/panel0-backlight/brightness 200
-    setprop sys.usb.configfs 1
+#
+# Copyright (C) 2026 The Android Open Source Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# ricefish (TicWatch E3) recovery init overrides.
+# Fixes USB gadget (MTP/ADB): the boot cmdline does not pass an
+# androidboot.usbcontroller= argument, so sys.usb.controller is never set and
+# configfs never binds to a UDC. We auto-detect the controller from sysfs.
+#
 
-on property:ro.boot.usbcontroller=*
-    setprop sys.usb.controller ${ro.boot.usbcontroller}
-    write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
+on init
+    write /sys/class/backlight/panel0-backlight/brightness 120
+    setprop sys.usb.configfs 1
+    setprop sys.usb.config mtp,adb
+
+    # Auto-detect the USB device controller (UDC) name and publish it so that
+    # TWRP's default init.recovery.usb.rc can bind the gadget (mtp + adb).
+    exec -- /system/bin/sh /sbin/udc_detect.sh
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+    # Re-detect the UDC in case it registered after init (kernel built-in -> early)
+    exec -- /system/bin/sh /sbin/udc_detect.sh

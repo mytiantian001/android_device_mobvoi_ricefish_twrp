@@ -1,0 +1,42 @@
+#
+# Copyright (C) 2026 The Android Open Source Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Brings up the Qualcomm QSEE / Keymaster / Gatekeeper HAL stack inside recovery
+# so TWRP's vold can unwrap FBE (fileencryption=v2+emmc_optimized) keys.
+#
+
+on init
+    # Vendor libraries are searched from the bundled /vendor/lib
+    export LD_LIBRARY_PATH /vendor/lib:/system/lib
+
+on fs
+    # Make sure the QSEE comms device is accessible by the HAL services
+    chmod 0660 /dev/qseecom
+    chown system drmrpc /dev/qseecom
+
+    # Start the crypto HAL stack (order matters: qseecom first)
+    start qseecom-service
+    start gatekeeper-1-0
+    start keymaster-4-0
+
+on property:vold.decrypt=trigger_restart_framework
+    start qseecom-service
+    start gatekeeper-1-0
+    start keymaster-4-0
+
+service qseecom-service /vendor/bin/hw/vendor.qti.hardware.qseecom@1.0-service
+    class hal
+    user system
+    group system drmrpc
+
+service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service-qti
+    class early_hal
+    user system
+    group system
+
+service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service-qti
+    class early_hal
+    user system
+    group system drmrpc

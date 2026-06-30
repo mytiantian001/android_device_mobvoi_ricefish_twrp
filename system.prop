@@ -6,9 +6,20 @@ ro.build.version.sdk=30
 
 # ADB
 ro.adb.secure=0
+ro.debuggable=1
 
-# USB MTP
+# USB / MTP (configfs gadget)
+ro.sys.usb.config=mtp,adb
+ro.sys.usb.usb.config=mtp,adb
+persist.sys.usb.config=mtp,adb
 ro.sys.usb.storage.type=mtp
+
+# Crypto (FBE inlinecrypt, v2+emmc_optimized)
+ro.crypto.volume.options=aes-256-xts:aes-256-cts:v2+emmc_optimized
+ro.crypto.fde_algorithm=aes-256-xts
+
+# Keystore
+ro.hardware.keystore_desede=true
 
 # Timezone
 persist.sys.timezone=Asia/Shanghai
